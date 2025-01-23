@@ -1,38 +1,27 @@
-# Variables
+# Variables générales
 CC = gcc
 CFLAGS = -Wall -Wextra -g3
-LDFLAGS = -lregex
 SRC = main.c repertoire.c
-OBJDIR = output/obj
 OBJ = $(SRC:.c=.o)
-EXEC = output/main.exe
-
-# Créer le répertoire de sortie si nécessaire
-$(shell mkdir -p $(OBJDIR))
+EXEC = output/main
+RM = rm -f
 
 # Règle par défaut
 all: $(EXEC)
 
 # Règle pour créer l'exécutable
 $(EXEC): $(OBJ)
-	$(CC) $(CFLAGS) -o $(EXEC) $(OBJ) $(LDFLAGS)
+	mkdir -p output
+	$(CC) $(CFLAGS) -o $(EXEC) $(OBJ)
 
-# Règle pour compiler les fichiers .c en .o dans le répertoire output/obj
-$(OBJDIR)/%.o: %.c
+# Règle pour compiler les fichiers .c en .o
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Règle pour nettoyer les fichiers objets et l'exécutable
 clean:
-	rm -f $(OBJ) $(EXEC)
-
-# Règle pour nettoyer les fichiers objets uniquement
-clean_obj:
-	rm -f $(OBJ)
+	$(RM) $(OBJ) $(EXEC)
 
 # Règle pour exécuter l'exécutable
 run: $(EXEC)
-	chcp 65001
-	./$(EXEC)
-
-# Règle pour la reconstruction complète
-rebuild: clean all
+	$(EXEC)

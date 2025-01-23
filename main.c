@@ -29,7 +29,6 @@ int main() {
         switch (choix) {
             case 1:
                 Creer_Enregistrement(repertoire, &nb_personnes);
-                printf("Personne ajoutée avec succès!\n");
                 break;
             case 2:
                 Affiche_Repertoire(repertoire, nb_personnes);

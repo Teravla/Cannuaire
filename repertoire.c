@@ -5,7 +5,7 @@
 #include <regex.h>
 
 #define MAX_PERSONNES_MAIN 100
-#define TAILLE_MAX 100
+#define TAILLE_MAX 40
 
 // Définition de la structure Personne
 typedef struct {
@@ -45,14 +45,20 @@ int est_email_valide(const char *email) {
 
 // Fonction pour vérifier que le numéro de téléphone est valide
 int est_numero_valide(const char *numero) {
-    // Vérifie si le numéro de téléphone contient uniquement des chiffres et éventuellement des espaces ou des tirets
+    int longueur = 0; // Compteur pour les chiffres
+
+    // Parcourt chaque caractère du numéro
     while (*numero) {
-        if (!isdigit(*numero) && *numero != ' ' && *numero != '-') {
-            return 0;
+        if (isdigit(*numero)) {
+            longueur++; // Incrémente pour chaque chiffre
+        } else if (*numero != ' ' && *numero != '-') {
+            return 0; // Retourne 0 si un caractère invalide est trouvé
         }
         numero++;
     }
-    return 1;
+
+    // Vérifie si le nombre de chiffres est exactement 10
+    return longueur == 10;
 }
 
 // Création d'un enregistrement (ajout d'une nouvelle personne)
